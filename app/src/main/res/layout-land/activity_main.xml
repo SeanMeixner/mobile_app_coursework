@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:padding="12dp"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="260dp" android:layout_height="match_parent"
+        android:layout_marginEnd="12dp">
+
+        <TextView android:id="@+id/salutation"
+            android:text="Welcome to Mobile Platform Development"
+            android:textSize="18sp"
+            android:layout_width="match_parent" android:layout_height="wrap_content"/>
+        <Button android:id="@+id/startButton"
+            android:text="Press to get data"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"/>
+        <TextView android:id="@+id/acknowledgement"
+            android:text="Contains Fx Currency Exchange data"
+            android:textSize="16sp"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"/>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="0dp" android:layout_height="match_parent"
+        android:layout_weight="1">
+        <TextView android:id="@+id/rawDataDisplay"
+            android:textSize="16sp"
+            android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    </ScrollView>
+</LinearLayout>

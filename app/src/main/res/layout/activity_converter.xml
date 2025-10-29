@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:padding="16dp"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/title"
+        android:textStyle="bold" android:textSize="18sp"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/rate"
+        android:layout_marginTop="4dp"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+    <RadioGroup
+        android:id="@+id/dirGroup"
+        android:orientation="horizontal"
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent" android:layout_height="wrap_content">
+        <RadioButton android:id="@+id/gbpToCode" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <RadioButton android:id="@+id/codeToGbp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/amount"
+        android:inputType="numberDecimal"
+        android:hint="Amount"
+        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/convert"
+        android:text="Convert"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/result"
+        android:textSize="16sp"
+        android:layout_marginTop="12dp"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+</LinearLayout>
