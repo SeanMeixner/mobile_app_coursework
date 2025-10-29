@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView rawDataDisplay;
     private Button startButton;
+    private TextView majorUsd, majorUsdSub, majorEur, majorEurSub, majorJpy, majorJpySub;
     private CurrencyViewModel vm;
 
     @Override
@@ -40,6 +41,12 @@ public class MainActivity extends AppCompatActivity {
 
         rawDataDisplay = findViewById(R.id.rawDataDisplay);
         startButton = findViewById(R.id.startButton);
+        majorUsd = findViewById(R.id.majorUsd);
+        majorUsdSub = findViewById(R.id.majorUsdSub);
+        majorEur = findViewById(R.id.majorEur);
+        majorEurSub = findViewById(R.id.majorEurSub);
+        majorJpy = findViewById(R.id.majorJpy);
+        majorJpySub = findViewById(R.id.majorJpySub);
 
         vm = new ViewModelProvider(this).get(CurrencyViewModel.class);
 
@@ -59,10 +66,21 @@ public class MainActivity extends AppCompatActivity {
         // After vm.refreshNow() completes and items arrive, change button behaviour:
         vm.items.observe(this, list -> {
             updatePreview(list, vm.lastBuildDate.getValue());
+
             if (list != null && !list.isEmpty()) {
+                // Reuse button to open the list
                 startButton.setText("View All Rates");
                 startButton.setOnClickListener(v ->
-                    startActivity(new Intent(this, org.me.gcu.s1032688.ui.RatesActivity.class)));
+                    startActivity(new android.content.Intent(this, org.me.gcu.s1032688.ui.RatesActivity.class)));
+
+                // Find majors
+                CurrencyItem usd = findByCode(list, "USD");
+                CurrencyItem eur = findByCode(list, "EUR");
+                CurrencyItem jpy = findByCode(list, "JPY");
+
+                setMajor(majorUsd, majorUsdSub, usd);
+                setMajor(majorEur, majorEurSub, eur);
+                setMajor(majorJpy, majorJpySub, jpy);
             }
         });
 
@@ -94,5 +112,32 @@ public class MainActivity extends AppCompatActivity {
             sb.append("• Ready for list/search/converter views\n");
         }
         rawDataDisplay.setText(sb.toString());
+    }
+
+    private CurrencyItem findByCode(ArrayList<CurrencyItem> list, String code) {
+        if (list == null) return null;
+        for (CurrencyItem item : list) {
+            if (code.equalsIgnoreCase(item.code)) return item;
+        }
+        return null;
+    }
+
+    private void setMajor(TextView label, TextView sub, CurrencyItem item) {
+        if (item == null) {
+            label.setText("-- : --");
+            sub.setText("Not available");
+            return;
+        }
+        label.setText(String.format(Locale.UK, "%s: %.4f", item.code, item.rate));
+        sub.setText("Tap to convert");
+
+        // Attach tap handler to open converter
+        label.setOnClickListener(v -> {
+            Intent intent = new Intent(this, org.me.gcu.s1032688.ui.ConverterActivity.class);
+            intent.putExtra("code", item.code);
+            intent.putExtra("rate", item.rate);
+            intent.putExtra("displayName", item.displayName);
+            startActivity(intent);
+        });
     }
 }
