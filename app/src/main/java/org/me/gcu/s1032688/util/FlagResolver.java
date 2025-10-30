@@ -5,10 +5,7 @@ import android.content.Context;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Currency code -> 2-letter code -> flag_<code>.png in drawable-nodpi.
- * If there's no match or no drawable, returns 0 so UI can hide the ImageView.
- */
+
 public final class FlagResolver {
 
     private FlagResolver() {}
