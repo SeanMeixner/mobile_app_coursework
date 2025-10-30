@@ -3,6 +3,7 @@ package org.me.gcu.s1032688.ui;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.me.gcu.s1032688.R;
 import org.me.gcu.s1032688.model.CurrencyItem;
+import org.me.gcu.s1032688.util.FlagResolver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,12 +62,28 @@ public class RatesAdapter extends RecyclerView.Adapter<RatesAdapter.Holder> {
     @Override
     public void onBindViewHolder(@NonNull Holder h, int position) {
         CurrencyItem c = shown.get(position);
-        h.title.setText(c.displayName + " (" + c.code + ")");
-        h.sub.setText(String.format(Locale.UK, "1 GBP = %.4f %s", c.rate, c.code));
 
-        // Colour-coding by strength (≥4 ranges for full marks)
-        int bg = colorForRate(h.itemView, c.rate);
+        h.title.setText(c.displayName + " (" + c.code + ")");
+        h.sub.setText(String.format(
+                Locale.UK,
+                "1 GBP = %.4f %s",
+                c.rate,
+                c.code
+        ));
+
+        // background tint by rate bucket
+        int bg = colorForRate(c.rate);
         h.itemView.setBackgroundColor(bg);
+
+        // show flag if we have it
+        int flagRes = FlagResolver.drawableFor(h.itemView.getContext(), c.code);
+        if (flagRes != 0) {
+            h.flag.setImageResource(flagRes);
+            h.flag.setVisibility(View.VISIBLE);
+        } else {
+            h.flag.setImageResource(android.R.color.transparent);
+            h.flag.setVisibility(View.INVISIBLE);
+        }
 
         h.itemView.setOnClickListener(v -> clicker.onRateClicked(c));
     }
@@ -74,14 +92,16 @@ public class RatesAdapter extends RecyclerView.Adapter<RatesAdapter.Holder> {
 
     static class Holder extends RecyclerView.ViewHolder {
         TextView title, sub;
+        ImageView flag;
         Holder(@NonNull View v) {
             super(v);
             title = v.findViewById(R.id.title);
             sub   = v.findViewById(R.id.sub);
+            flag  = v.findViewById(R.id.flag);
         }
     }
 
-    private int colorForRate(View v, double r) {
+    private int colorForRate(double r) {
         if (Double.isNaN(r)) return 0x00000000;
         if (r < 1.0)  return 0x332196F3; // light blue
         if (r < 5.0)  return 0x33A5D6A7; // light green
