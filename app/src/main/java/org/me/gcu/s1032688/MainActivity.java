@@ -15,6 +15,7 @@ package org.me.gcu.s1032688;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView rawDataDisplay;
     private Button startButton;
     private TextView majorUsd, majorUsdSub, majorEur, majorEurSub, majorJpy, majorJpySub;
+    private View cardUsd, cardEur, cardJpy;
+    private TextView lastUpdatedChip;
     private CurrencyViewModel vm;
 
     @Override
@@ -47,6 +50,10 @@ public class MainActivity extends AppCompatActivity {
         majorEurSub = findViewById(R.id.majorEurSub);
         majorJpy = findViewById(R.id.majorJpy);
         majorJpySub = findViewById(R.id.majorJpySub);
+        cardUsd = findViewById(R.id.cardUsd);
+        cardEur = findViewById(R.id.cardEur);
+        cardJpy = findViewById(R.id.cardJpy);
+        lastUpdatedChip = findViewById(R.id.lastUpdatedChip);
 
         vm = new ViewModelProvider(this).get(CurrencyViewModel.class);
 
@@ -62,7 +69,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        vm.lastBuildDate.observe(this, s -> updatePreview(vm.items.getValue(), s));
+        vm.lastBuildDate.observe(this, s -> {
+            updatePreview(vm.items.getValue(), s);
+            if (s != null) lastUpdatedChip.setText("Last updated: " + s);
+        });
         // After vm.refreshNow() completes and items arrive, change button behaviour:
         vm.items.observe(this, list -> {
             updatePreview(list, vm.lastBuildDate.getValue());
@@ -138,6 +148,22 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("rate", item.rate);
             intent.putExtra("displayName", item.displayName);
             startActivity(intent);
+        });
+    }
+
+    private void bindMajorCard(View card, CurrencyItem item) {
+        if (card == null) return;
+        if (item == null) {
+            card.setClickable(false);
+            return;
+        }
+        card.setClickable(true);
+        card.setOnClickListener(v -> {
+            Intent i = new Intent(this, org.me.gcu.s1032688.ui.ConverterActivity.class);
+            i.putExtra("code", item.code);
+            i.putExtra("rate", item.rate);
+            i.putExtra("displayName", item.displayName);
+            startActivity(i);
         });
     }
 }

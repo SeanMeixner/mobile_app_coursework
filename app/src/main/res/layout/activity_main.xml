@@ -1,49 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- MPD XML Starter code 2025-2026 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FAFAFA">
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Header -->
         <TextView
             android:id="@+id/salutation"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="Welcome to Mobile Platform Development"
-            />
-        <Button
-            android:id="@+id/startButton"
+            android:text="Currency Dashboard"
+            android:textStyle="bold"
+            android:textSize="22sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Press to get data"
-            />
+            android:layout_marginBottom="8dp"/>
 
-        <!-- NEW: Majors strip -->
+        <!-- Actions / Last updated row -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <Button
+                android:id="@+id/startButton"
+                android:text="Refresh / View All Rates"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/lastUpdatedChip"
+                android:text="Last updated: --"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:textSize="12sp"
+                android:background="@drawable/bg_card"
+                android:layout_marginStart="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <!-- Majors: three tappable cards -->
         <LinearLayout
             android:id="@+id/majorsContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="8dp"
-            android:weightSum="3">
+            android:weightSum="3"
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <LinearLayout
+                android:id="@+id/cardUsd"
+                android:orientation="vertical"
+                android:padding="12dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:padding="8dp"
-                android:background="#F2F4F7"
-                android:orientation="vertical">
+                android:background="@drawable/bg_card"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true">
 
                 <TextView
                     android:id="@+id/majorUsd"
                     android:text="USD: --"
                     android:textStyle="bold"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -55,21 +85,27 @@
                     android:layout_height="wrap_content"/>
             </LinearLayout>
 
+            <Space
+                android:layout_width="8dp"
+                android:layout_height="0dp"/>
+
             <LinearLayout
+                android:id="@+id/cardEur"
+                android:orientation="vertical"
+                android:padding="12dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:padding="8dp"
-                android:background="#F2F4F7"
-                android:orientation="vertical"
-                android:layout_marginStart="6dp"
-                android:layout_marginEnd="6dp">
+                android:background="@drawable/bg_card"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true">
 
                 <TextView
                     android:id="@+id/majorEur"
                     android:text="EUR: --"
                     android:textStyle="bold"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -81,19 +117,27 @@
                     android:layout_height="wrap_content"/>
             </LinearLayout>
 
+            <Space
+                android:layout_width="8dp"
+                android:layout_height="0dp"/>
+
             <LinearLayout
+                android:id="@+id/cardJpy"
+                android:orientation="vertical"
+                android:padding="12dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:padding="8dp"
-                android:background="#F2F4F7"
-                android:orientation="vertical">
+                android:background="@drawable/bg_card"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true">
 
                 <TextView
                     android:id="@+id/majorJpy"
                     android:text="JPY: --"
                     android:textStyle="bold"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -106,19 +150,39 @@
             </LinearLayout>
         </LinearLayout>
 
+        <!-- Acknowledgement -->
         <TextView
             android:id="@+id/acknowledgement"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
             android:text="Contains Fx Currency Exchange data"
-            />
-        <TextView
-            android:id="@+id/rawDataDisplay"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="Raw Data is Displayed here"
-            />
+            android:textSize="14sp"
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <!-- Preview box -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="@drawable/bg_card"
+            android:padding="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Preview"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/rawDataDisplay"
+                android:fontFamily="monospace"
+                android:textSize="13sp"
+                android:layout_marginTop="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Raw Data is Displayed here"/>
+        </LinearLayout>
+
     </LinearLayout>
 </ScrollView>
