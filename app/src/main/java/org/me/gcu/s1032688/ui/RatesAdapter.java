@@ -13,9 +13,12 @@ import org.me.gcu.s1032688.R;
 import org.me.gcu.s1032688.model.CurrencyItem;
 import org.me.gcu.s1032688.util.FlagResolver;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class RatesAdapter extends RecyclerView.Adapter<RatesAdapter.Holder> {
 
@@ -24,6 +27,52 @@ public class RatesAdapter extends RecyclerView.Adapter<RatesAdapter.Holder> {
     private final ArrayList<CurrencyItem> all = new ArrayList<>();
     private final ArrayList<CurrencyItem> shown = new ArrayList<>();
     private final OnRateClick clicker;
+
+    // country/region keyword aliases per currency code
+    private static final Map<String, String[]> ALIASES = new HashMap<>();
+    static {
+        // majors
+        ALIASES.put("USD", new String[]{"united states","usa","america","u.s.","us"});
+        ALIASES.put("GBP", new String[]{"united kingdom","uk","britain","great britain","england","scotland","wales","northern ireland"});
+        ALIASES.put("EUR", new String[]{"european union","eu","eurozone","europe"});
+        ALIASES.put("JPY", new String[]{"japan","nippon"});
+
+        // common
+        ALIASES.put("CHF", new String[]{"switzerland","swiss"});
+        ALIASES.put("AUD", new String[]{"australia","aussie"});
+        ALIASES.put("CAD", new String[]{"canada","canadian"});
+        ALIASES.put("NZD", new String[]{"new zealand","nz","kiwi"});
+        ALIASES.put("CNY", new String[]{"china","prc","chinese"});
+        ALIASES.put("HKD", new String[]{"hong kong","hk"});
+        ALIASES.put("SGD", new String[]{"singapore"});
+        ALIASES.put("SEK", new String[]{"sweden","swedish"});
+        ALIASES.put("NOK", new String[]{"norway","norwegian"});
+        ALIASES.put("DKK", new String[]{"denmark","danish"});
+        ALIASES.put("ZAR", new String[]{"south africa","rsa"});
+        ALIASES.put("INR", new String[]{"india","indian"});
+        ALIASES.put("BRL", new String[]{"brazil","brazilian"});
+        ALIASES.put("MXN", new String[]{"mexico","mexican"});
+        ALIASES.put("TRY", new String[]{"turkey","türkiye","turkish"});
+        ALIASES.put("AED", new String[]{"united arab emirates","uae","dubai","abu dhabi"});
+        ALIASES.put("PLN", new String[]{"poland","polish"});
+        ALIASES.put("CZK", new String[]{"czech republic","czechia","czech"});
+        ALIASES.put("HUF", new String[]{"hungary","hungarian"});
+        ALIASES.put("RON", new String[]{"romania","romanian"});
+        ALIASES.put("KRW", new String[]{"south korea","korea","republic of korea"});
+        ALIASES.put("TWD", new String[]{"taiwan"});
+        ALIASES.put("THB", new String[]{"thailand","thai"});
+        ALIASES.put("IDR", new String[]{"indonesia","indonesian"});
+        ALIASES.put("MYR", new String[]{"malaysia","malaysian"});
+        ALIASES.put("PHP", new String[]{"philippines","filipino"});
+        ALIASES.put("SAR", new String[]{"saudi arabia","saudi"});
+        ALIASES.put("ILS", new String[]{"israel","israeli"});
+        ALIASES.put("EGP", new String[]{"egypt","egyptian"});
+        ALIASES.put("NGN", new String[]{"nigeria","nigerian"});
+        ALIASES.put("KES", new String[]{"kenya","kenyan"});
+        ALIASES.put("GHS", new String[]{"ghana","ghanaian"});
+        ALIASES.put("MAD", new String[]{"morocco","moroccan"});
+        ALIASES.put("ANG", new String[]{"curaçao","curacao","netherlands antilles","antilles"});
+    }
 
     public RatesAdapter(ArrayList<CurrencyItem> seed, OnRateClick clicker) {
         this.clicker = clicker;
@@ -36,20 +85,44 @@ public class RatesAdapter extends RecyclerView.Adapter<RatesAdapter.Holder> {
         notifyDataSetChanged();
     }
 
+    // --- UPDATED: filter now also matches country/region keywords ---
     public void filter(String q) {
         shown.clear();
         if (q == null || q.trim().isEmpty()) {
             shown.addAll(all);
         } else {
-            String s = q.toLowerCase(Locale.ROOT);
+            String s = norm(q);
+
             for (CurrencyItem c : all) {
-                if (c.displayName.toLowerCase(Locale.ROOT).contains(s) ||
-                        c.code.toLowerCase(Locale.ROOT).contains(s)) {
+                String name = c.displayName != null ? c.displayName : "";
+                String code = c.code != null ? c.code : "";
+                // match code or currency name
+                if (norm(name).contains(s) || norm(code).contains(s)) {
                     shown.add(c);
+                    continue;
+                }
+                // match country/region aliases for this currency code
+                String[] aliases = ALIASES.get(code.toUpperCase(Locale.ROOT));
+                if (aliases != null) {
+                    boolean hit = false;
+                    for (String a : aliases) {
+                        if (norm(a).contains(s) || s.contains(norm(a))) { hit = true; break; }
+                    }
+                    if (hit) {
+                        shown.add(c);
+                    }
                 }
             }
         }
         notifyDataSetChanged();
+    }
+
+    // normalise: lowercase, strip accents/diacritics, remove punctuation/spaces
+    private static String norm(String x) {
+        String y = x == null ? "" : x.toLowerCase(Locale.ROOT).trim();
+        y = Normalizer.normalize(y, Normalizer.Form.NFD).replaceAll("\\p{M}+", ""); // remove accents
+        y = y.replaceAll("[^a-z0-9]", ""); // drop spaces/dashes/punct
+        return y;
     }
 
     @NonNull @Override
@@ -64,18 +137,11 @@ public class RatesAdapter extends RecyclerView.Adapter<RatesAdapter.Holder> {
         CurrencyItem c = shown.get(position);
 
         h.title.setText(c.displayName + " (" + c.code + ")");
-        h.sub.setText(String.format(
-                Locale.UK,
-                "1 GBP = %.4f %s",
-                c.rate,
-                c.code
-        ));
+        h.sub.setText(String.format(Locale.UK, "1 GBP = %.4f %s", c.rate, c.code));
 
-        // background tint by rate bucket
         int bg = colorForRate(c.rate);
         h.itemView.setBackgroundColor(bg);
 
-        // show flag if we have it
         int flagRes = FlagResolver.drawableFor(h.itemView.getContext(), c.code);
         if (flagRes != 0) {
             h.flag.setImageResource(flagRes);
@@ -91,21 +157,20 @@ public class RatesAdapter extends RecyclerView.Adapter<RatesAdapter.Holder> {
     @Override public int getItemCount() { return shown.size(); }
 
     static class Holder extends RecyclerView.ViewHolder {
-        TextView title, sub;
-        ImageView flag;
+        ImageView flag; TextView title, sub;
         Holder(@NonNull View v) {
             super(v);
+            flag  = v.findViewById(R.id.flag);
             title = v.findViewById(R.id.title);
             sub   = v.findViewById(R.id.sub);
-            flag  = v.findViewById(R.id.flag);
         }
     }
 
     private int colorForRate(double r) {
         if (Double.isNaN(r)) return 0x00000000;
-        if (r < 1.0)  return 0x332196F3; // light blue
-        if (r < 5.0)  return 0x33A5D6A7; // light green
-        if (r < 10.0) return 0x33FFD54F; // light amber
-        return 0x33EF9A9A;               // light red
+        if (r < 1.0)  return 0x332196F3;
+        if (r < 5.0)  return 0x33A5D6A7;
+        if (r < 10.0) return 0x33FFD54F;
+        return 0x33EF9A9A;
     }
 }
