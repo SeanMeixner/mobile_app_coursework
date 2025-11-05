@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Map currency code to pipe-separated alias keywords used in search filtering.
+         Format per item: CODE:alias1|alias2|alias3 -->
+    <string-array name="currency_aliases">
+        <!-- majors -->
+        <item>USD:united states|usa|america|u.s.|us</item>
+        <item>GBP:united kingdom|uk|britain|great britain|england|scotland|wales|northern ireland</item>
+        <item>EUR:european union|eu|eurozone|europe</item>
+        <item>JPY:japan|nippon</item>
+
+        <!-- common -->
+        <item>CHF:switzerland|swiss</item>
+        <item>AUD:australia|aussie</item>
+        <item>CAD:canada|canadian</item>
+        <item>NZD:new zealand|nz|kiwi</item>
+        <item>CNY:china|prc|chinese</item>
+        <item>HKD:hong kong|hk</item>
+        <item>SGD:singapore</item>
+        <item>SEK:sweden|swedish</item>
+        <item>NOK:norway|norwegian</item>
+        <item>DKK:denmark|danish</item>
+        <item>ZAR:south africa|rsa</item>
+        <item>INR:india|indian</item>
+        <item>BRL:brazil|brazilian</item>
+        <item>MXN:mexico|mexican</item>
+        <item>TRY:turkey|turkiye|turkish</item>
+        <item>AED:united arab emirates|uae|dubai|abu dhabi</item>
+        <item>PLN:poland|polish</item>
+        <item>CZK:czech republic|czechia|czech</item>
+        <item>HUF:hungary|hungarian</item>
+        <item>RON:romania|romanian</item>
+        <item>KRW:south korea|korea|republic of korea</item>
+        <item>TWD:taiwan|tai</item>
+        <item>THB:thailand|thai</item>
+        <item>IDR:indonesia|indonesian</item>
+        <item>MYR:malaysia|malaysian</item>
+        <item>PHP:philippines|filipino</item>
+        <item>SAR:saudi arabia|saudi</item>
+        <item>ILS:israel|israeli</item>
+        <item>EGP:egypt|egyptian</item>
+        <item>NGN:nigeria|nigerian</item>
+        <item>KES:kenya|kenyan</item>
+        <item>GHS:ghana|ghanaian</item>
+        <item>MAD:morocco|moroccan</item>
+        <item>ANG:curacao|netherlands antilles|antilles</item>
+        <item>RUB:russia|russian</item>
+    </string-array>
+</resources>
+

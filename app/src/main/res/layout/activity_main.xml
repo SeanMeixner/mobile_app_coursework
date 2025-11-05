@@ -11,16 +11,17 @@
         android:layout_height="wrap_content">
 
         <!-- Header -->
-        <TextView
-            android:id="@+id/salutation"
-            android:text="Currency Dashboard"
-            android:textStyle="bold"
-            android:textSize="22sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"/>
 
         <!-- Actions / Last updated row -->
+        <TextView
+            android:id="@+id/salutation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Currency Dashboard"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -34,21 +35,23 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
 
-            <TextView
-                android:id="@+id/lastUpdatedChip"
-                android:text="Last updated: --"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
-                android:textSize="12sp"
-                android:background="@drawable/bg_card"
-                android:layout_marginStart="12dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
         </LinearLayout>
 
         <!-- Majors: three tappable cards -->
+
+        <TextView
+            android:id="@+id/lastUpdatedChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/bg_card"
+            android:paddingLeft="10dp"
+            android:paddingTop="6dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="6dp"
+            android:text="Last updated: --"
+            android:textSize="12sp" />
+
         <LinearLayout
             android:id="@+id/majorsContainer"
             android:orientation="horizontal"
@@ -169,19 +172,19 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
                 android:text="Preview"
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/rawDataDisplay"
-                android:fontFamily="monospace"
-                android:textSize="13sp"
-                android:layout_marginTop="6dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Raw Data is Displayed here"/>
+                android:layout_marginTop="6dp"
+                android:fontFamily="monospace"
+                android:text="Raw Data is Displayed here"
+                android:textSize="13sp" />
         </LinearLayout>
 
     </LinearLayout>

@@ -54,7 +54,7 @@ public class RatesActivity extends AppCompatActivity implements RatesAdapter.OnR
 
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        adapter = new RatesAdapter(new ArrayList<>(), this);
+        adapter = new RatesAdapter(new ArrayList<>(), this, this);
         rv.setAdapter(adapter);
 
         vm = new ViewModelProvider(this).get(CurrencyViewModel.class);

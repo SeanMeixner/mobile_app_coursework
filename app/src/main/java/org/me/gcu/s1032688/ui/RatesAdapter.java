@@ -1,5 +1,6 @@
 package org.me.gcu.s1032688.ui;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,55 +28,11 @@ public class RatesAdapter extends RecyclerView.Adapter<RatesAdapter.Holder> {
     private final ArrayList<CurrencyItem> all = new ArrayList<>();
     private final ArrayList<CurrencyItem> shown = new ArrayList<>();
     private final OnRateClick clicker;
+    private final Map<String, String[]> aliases = new HashMap<>();
 
-    // country/region keyword aliases per currency code
-    private static final Map<String, String[]> ALIASES = new HashMap<>();
-    static {
-        // majors
-        ALIASES.put("USD", new String[]{"united states","usa","america","u.s.","us"});
-        ALIASES.put("GBP", new String[]{"united kingdom","uk","britain","great britain","england","scotland","wales","northern ireland"});
-        ALIASES.put("EUR", new String[]{"european union","eu","eurozone","europe"});
-        ALIASES.put("JPY", new String[]{"japan","nippon"});
-
-        // common
-        ALIASES.put("CHF", new String[]{"switzerland","swiss"});
-        ALIASES.put("AUD", new String[]{"australia","aussie"});
-        ALIASES.put("CAD", new String[]{"canada","canadian"});
-        ALIASES.put("NZD", new String[]{"new zealand","nz","kiwi"});
-        ALIASES.put("CNY", new String[]{"china","prc","chinese"});
-        ALIASES.put("HKD", new String[]{"hong kong","hk"});
-        ALIASES.put("SGD", new String[]{"singapore"});
-        ALIASES.put("SEK", new String[]{"sweden","swedish"});
-        ALIASES.put("NOK", new String[]{"norway","norwegian"});
-        ALIASES.put("DKK", new String[]{"denmark","danish"});
-        ALIASES.put("ZAR", new String[]{"south africa","rsa"});
-        ALIASES.put("INR", new String[]{"india","indian"});
-        ALIASES.put("BRL", new String[]{"brazil","brazilian"});
-        ALIASES.put("MXN", new String[]{"mexico","mexican"});
-        ALIASES.put("TRY", new String[]{"turkey","türkiye","turkish"});
-        ALIASES.put("AED", new String[]{"united arab emirates","uae","dubai","abu dhabi"});
-        ALIASES.put("PLN", new String[]{"poland","polish"});
-        ALIASES.put("CZK", new String[]{"czech republic","czechia","czech"});
-        ALIASES.put("HUF", new String[]{"hungary","hungarian"});
-        ALIASES.put("RON", new String[]{"romania","romanian"});
-        ALIASES.put("KRW", new String[]{"south korea","korea","republic of korea"});
-        ALIASES.put("TWD", new String[]{"taiwan"});
-        ALIASES.put("THB", new String[]{"thailand","thai"});
-        ALIASES.put("IDR", new String[]{"indonesia","indonesian"});
-        ALIASES.put("MYR", new String[]{"malaysia","malaysian"});
-        ALIASES.put("PHP", new String[]{"philippines","filipino"});
-        ALIASES.put("SAR", new String[]{"saudi arabia","saudi"});
-        ALIASES.put("ILS", new String[]{"israel","israeli"});
-        ALIASES.put("EGP", new String[]{"egypt","egyptian"});
-        ALIASES.put("NGN", new String[]{"nigeria","nigerian"});
-        ALIASES.put("KES", new String[]{"kenya","kenyan"});
-        ALIASES.put("GHS", new String[]{"ghana","ghanaian"});
-        ALIASES.put("MAD", new String[]{"morocco","moroccan"});
-        ALIASES.put("ANG", new String[]{"curaçao","curacao","netherlands antilles","antilles"});
-    }
-
-    public RatesAdapter(ArrayList<CurrencyItem> seed, OnRateClick clicker) {
+    public RatesAdapter(ArrayList<CurrencyItem> seed, OnRateClick clicker, Context context) {
         this.clicker = clicker;
+        loadAliases(context);
         submit(seed);
     }
 
@@ -102,7 +59,7 @@ public class RatesAdapter extends RecyclerView.Adapter<RatesAdapter.Holder> {
                     continue;
                 }
                 // match country/region aliases for this currency code
-                String[] aliases = ALIASES.get(code.toUpperCase(Locale.ROOT));
+                String[] aliases = this.aliases.get(code.toUpperCase(Locale.ROOT));
                 if (aliases != null) {
                     boolean hit = false;
                     for (String a : aliases) {
@@ -115,6 +72,31 @@ public class RatesAdapter extends RecyclerView.Adapter<RatesAdapter.Holder> {
             }
         }
         notifyDataSetChanged();
+    }
+
+    private void loadAliases(Context ctx) {
+        try {
+            String[] arr = ctx.getResources().getStringArray(R.array.currency_aliases);
+            for (String item : arr) {
+                if (item == null) continue;
+                String trimmed = item.trim();
+                if (trimmed.isEmpty()) continue;
+                int sep = trimmed.indexOf(':');
+                if (sep <= 0) continue;
+                String code = trimmed.substring(0, sep).trim().toUpperCase(Locale.ROOT);
+                String rest = trimmed.substring(sep + 1).trim();
+                if (code.length() != 3 || rest.isEmpty()) continue;
+                String[] vals = rest.split("\\|");
+                ArrayList<String> cleaned = new ArrayList<>(vals.length);
+                for (String v : vals) {
+                    String t = v == null ? "" : v.trim();
+                    if (!t.isEmpty()) cleaned.add(t);
+                }
+                if (!cleaned.isEmpty()) aliases.put(code, cleaned.toArray(new String[0]));
+            }
+        } catch (Exception ignored) {
+            // leave aliases empty if resource missing or malformed
+        }
     }
 
     // normalise: lowercase, strip accents/diacritics, remove punctuation/spaces
@@ -174,3 +156,4 @@ public class RatesAdapter extends RecyclerView.Adapter<RatesAdapter.Holder> {
         return 0x33EF9A9A;
     }
 }
+

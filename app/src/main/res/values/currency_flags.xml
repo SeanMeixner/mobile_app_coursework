@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- currency code to 2-letter country/region code used in flag_*.png -->
+    <string-array name="currency_flag_map">
+        <!-- Major currencies -->
+        <item>GBP:gb</item>
+        <item>USD:us</item>
+        <item>EUR:eu</item>
+        <item>JPY:jp</item>
+
+        <!-- Europe -->
+        <item>CHF:ch</item>
+        <item>SEK:se</item>
+        <item>NOK:no</item>
+        <item>DKK:dk</item>
+        <item>PLN:pl</item>
+        <item>CZK:cz</item>
+        <item>HUF:hu</item>
+        <item>RON:ro</item>
+        <item>HRK:hr</item>
+        <item>BGN:bg</item>
+        <item>ISK:is</item>
+        <item>MKD:mk</item>
+        <item>ALL:al</item>
+        <item>MDL:md</item>
+        <item>BAM:ba</item>
+        <item>RSD:rs</item>
+        <item>UAH:ua</item>
+        <item>BYN:by</item>
+        <item>RUB:ru</item>
+        <item>GEL:ge</item>
+        <item>AMD:am</item>
+        <item>AZN:az</item>
+
+        <!-- Americas -->
+        <item>CAD:ca</item>
+        <item>MXN:mx</item>
+        <item>BRL:br</item>
+        <item>ARS:ar</item>
+        <item>COP:co</item>
+        <item>PEN:pe</item>
+        <item>CLP:cl</item>
+        <item>UYU:uy</item>
+        <item>PYG:py</item>
+        <item>BOB:bo</item>
+        <item>VEF:ve</item>
+        <item>VES:ve</item>
+        <item>GYD:gy</item>
+        <item>SRD:sr</item>
+        <item>DOP:do</item>
+        <item>CRC:cr</item>
+        <item>NIO:ni</item>
+        <item>HNL:hn</item>
+        <item>GTQ:gt</item>
+        <item>SVC:sv</item>
+        <item>PAB:pa</item>
+        <item>HTG:ht</item>
+        <item>JMD:jm</item>
+        <item>BBD:bb</item>
+        <item>BZD:bz</item>
+        <item>TTD:tt</item>
+        <item>BMD:bm</item>
+        <item>KYD:ky</item>
+        <item>BSD:bs</item>
+        <item>XCD:ag</item>
+        <item>ANG:cw</item>
+        <item>AWG:aw</item>
+
+        <!-- Asia-Pacific -->
+        <item>CNY:cn</item>
+        <item>HKD:hk</item>
+        <item>INR:in</item>
+        <item>IDR:id</item>
+        <item>KRW:kr</item>
+        <item>MYR:my</item>
+        <item>PHP:ph</item>
+        <item>SGD:sg</item>
+        <item>THB:th</item>
+        <item>VND:vn</item>
+        <item>TWD:tw</item>
+        <item>PKR:pk</item>
+        <item>BDT:bd</item>
+        <item>LKR:lk</item>
+        <item>NPR:np</item>
+        <item>MMK:mm</item>
+        <item>KHR:kh</item>
+        <item>LAK:la</item>
+        <item>MNT:mn</item>
+        <item>KZT:kz</item>
+        <item>UZS:uz</item>
+        <item>KGS:kg</item>
+        <item>TJS:tj</item>
+        <item>TMT:tm</item>
+        <item>AFN:af</item>
+        <item>BTN:bt</item>
+        <item>MVR:mv</item>
+
+        <!-- Oceania -->
+        <item>AUD:au</item>
+        <item>NZD:nz</item>
+        <item>FJD:fj</item>
+        <item>PGK:pg</item>
+        <item>SBD:sb</item>
+        <item>TOP:to</item>
+        <item>WST:ws</item>
+        <item>VUV:vu</item>
+        <item>XPF:pf</item>
+
+        <!-- Middle East -->
+        <item>AED:ae</item>
+        <item>SAR:sa</item>
+        <item>ILS:il</item>
+        <item>BHD:bh</item>
+        <item>OMR:om</item>
+        <item>JOD:jo</item>
+        <item>LBP:lb</item>
+        <item>IQD:iq</item>
+        <item>SYP:sy</item>
+        <item>YER:ye</item>
+        <item>KWD:kw</item>
+        <item>QAR:qa</item>
+        <item>IRR:ir</item>
+
+        <!-- Africa -->
+        <item>ZAR:za</item>
+        <item>EGP:eg</item>
+        <item>NGN:ng</item>
+        <item>KES:ke</item>
+        <item>GHS:gh</item>
+        <item>MAD:ma</item>
+        <item>TND:tn</item>
+        <item>DZD:dz</item>
+        <item>LYD:ly</item>
+        <item>SZL:sz</item>
+        <item>MUR:mu</item>
+        <item>MZN:mz</item>
+        <item>ZMW:zm</item>
+        <item>BWP:bw</item>
+        <item>NAD:na</item>
+        <item>LSL:ls</item>
+        <item>ZWL:zw</item>
+        <item>AOA:ao</item>
+        <item>TZS:tz</item>
+        <item>UGX:ug</item>
+        <item>RWF:rw</item>
+        <item>ETB:et</item>
+        <item>SOS:so</item>
+        <item>DJF:dj</item>
+        <item>ERN:er</item>
+        <item>SDG:sd</item>
+        <item>SSP:ss</item>
+        <item>MWK:mw</item>
+        <item>SCR:sc</item>
+        <item>KMF:km</item>
+        <item>MGA:mg</item>
+        <item>XAF:cm</item>
+        <item>XOF:sn</item>
+        <item>GNF:gn</item>
+        <item>LRD:lr</item>
+        <item>SLL:sl</item>
+        <item>GMD:gm</item>
+        <item>CVE:cv</item>
+        <item>STN:st</item>
+        <item>CDF:cd</item>
+        <item>BIF:bi</item>
+
+        <!-- Other -->
+        <item>BND:bn</item>
+        <item>MOP:mo</item>
+        <item>SHP:sh</item>
+        <item>FKP:fk</item>
+        <item>GIP:gi</item>
+    </string-array>
+</resources>
+
