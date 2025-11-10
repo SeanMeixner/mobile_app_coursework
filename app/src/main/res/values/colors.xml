@@ -2,6 +2,13 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <!-- Brand palette: Dark Blue theme -->
+    <color name="brand_primary">#0D47A1</color>
+    <color name="brand_on_primary">#FFFFFFFF</color>
+    <color name="brand_primary_container">#1565C0</color>
+    <color name="brand_on_primary_container">#FFFFFFFF</color>
+    <color name="brand_secondary">#1976D2</color>
+    <color name="brand_on_secondary">#FFFFFFFF</color>
     <!-- Rate magnitude accents -->
     <color name="rate_low">#2196F3</color>     <!-- blue -->
     <color name="rate_ok">#4CAF50</color>      <!-- green -->
