@@ -13,6 +13,12 @@ import java.util.concurrent.TimeUnit;
 
 import org.me.gcu.s1032688.data.CurrencyRepository;
 import org.me.gcu.s1032688.model.CurrencyItem;
+/**
+ * ViewModel that fetches and exposes currency rates from the repository.
+ * - Performs network and parsing off the main thread
+ * - Exposes LiveData for items, timestamps, loading and errors
+ * - Schedules an initial fetch and hourly periodic refresh
+ */
 public class CurrencyViewModel extends ViewModel {
 
     private final CurrencyRepository repo = new CurrencyRepository();
@@ -28,21 +34,19 @@ public class CurrencyViewModel extends ViewModel {
     public LiveData<Boolean> loading = _loading;
     public LiveData<String> error = _error;
 
-    // Top-level scheduled refresh fields
+    // Background scheduler for periodic refresh
     private final ScheduledExecutorService scheduler =
             Executors.newSingleThreadScheduledExecutor();
     private final ScheduledFuture<?> refreshTask;
 
-    // Constructor to schedule initial and periodic refresh
+    // Schedule initial and periodic refresh
     public CurrencyViewModel() {
-        // initial fetch shortly after launch
+        // Initial fetch shortly after launch
         scheduler.schedule(this::refreshNow, 500, TimeUnit.MILLISECONDS);
-        // demo-friendly interval (15 min). For submission, change both 15 → 60.
-        refreshTask = scheduler.scheduleWithFixedDelay(
-                this::refreshNow, 60, 60, TimeUnit.MINUTES
-        );
+        // Auto-update every hour (submission requirement).
+        refreshTask = scheduler.scheduleWithFixedDelay(this::refreshNow, 60, 60, java.util.concurrent.TimeUnit.MINUTES);
     }
-
+    /** Trigger an immediate refresh of the RSS feed. */
     public void refreshNow() {
         _loading.postValue(true);
         _error.postValue(null);
@@ -62,9 +66,11 @@ public class CurrencyViewModel extends ViewModel {
 
     @Override
     protected void onCleared() {
+        // Stop background work when ViewModel is no longer used
         if (refreshTask != null) refreshTask.cancel(true);
         scheduler.shutdownNow();
         io.shutdownNow();
         super.onCleared();
     }
 }
+

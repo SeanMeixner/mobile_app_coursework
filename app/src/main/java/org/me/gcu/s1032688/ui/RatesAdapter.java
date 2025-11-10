@@ -22,6 +22,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * RecyclerView adapter showing a list of currency rates.
+ * - Supports filtering by code, name and country aliases
+ * - Shows a small flag and a colored chip indicating rate magnitude
+ */
 public class RatesAdapter extends RecyclerView.Adapter<RatesAdapter.Holder> {
 
     public interface OnRateClick { void onRateClicked(CurrencyItem item); }
@@ -37,13 +42,14 @@ public class RatesAdapter extends RecyclerView.Adapter<RatesAdapter.Holder> {
         submit(seed);
     }
 
+    /** Replace current data with a new list. */
     public void submit(List<CurrencyItem> list) {
         all.clear(); shown.clear();
         if (list != null) { all.addAll(list); shown.addAll(list); }
         notifyDataSetChanged();
     }
 
-    // --- UPDATED: filter now also matches country/region keywords ---
+    // Filter by code, currency name, or any configured country/region alias
     public void filter(String q) {
         shown.clear();
         if (q == null || q.trim().isEmpty()) {
@@ -75,6 +81,7 @@ public class RatesAdapter extends RecyclerView.Adapter<RatesAdapter.Holder> {
         notifyDataSetChanged();
     }
 
+    /** Load per-currency country/region aliases from resources. */
     private void loadAliases(Context ctx) {
         try {
             String[] arr = ctx.getResources().getStringArray(R.array.currency_aliases);
@@ -150,20 +157,21 @@ public class RatesAdapter extends RecyclerView.Adapter<RatesAdapter.Holder> {
         }
     }
 
+    /** Simple 4+ bucket color scale for the rate magnitude. */
     private void styleChipForRate(Holder h, double r) {
         if (h.rateChip == null) return;
         int bg;
         String label;
         if (Double.isNaN(r)) {
-            bg = 0xFF9E9E9E; label = "N/A";
+            bg = 0xFF9E9E9E; label = h.itemView.getContext().getString(R.string.rate_label_stable);
         } else if (r < 1.0) {
-            bg = h.itemView.getContext().getColor(R.color.rate_low); label = "Low";
+            bg = h.itemView.getContext().getColor(R.color.rate_low); label = h.itemView.getContext().getString(R.string.rate_label_low);
         } else if (r < 5.0) {
-            bg = h.itemView.getContext().getColor(R.color.rate_ok); label = "Stable";
+            bg = h.itemView.getContext().getColor(R.color.rate_ok); label = h.itemView.getContext().getString(R.string.rate_label_stable);
         } else if (r < 10.0) {
-            bg = h.itemView.getContext().getColor(R.color.rate_mid); label = "Elevated";
+            bg = h.itemView.getContext().getColor(R.color.rate_mid); label = h.itemView.getContext().getString(R.string.rate_label_elevated);
         } else {
-            bg = h.itemView.getContext().getColor(R.color.rate_high); label = "High";
+            bg = h.itemView.getContext().getColor(R.color.rate_high); label = h.itemView.getContext().getString(R.string.rate_label_high);
         }
         h.rateChip.setText(label);
         h.rateChip.setChipBackgroundColor(ColorStateList.valueOf(bg));

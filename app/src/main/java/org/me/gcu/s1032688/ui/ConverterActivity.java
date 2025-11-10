@@ -12,6 +12,11 @@ import org.me.gcu.s1032688.util.FlagResolver;
 
 import java.util.Locale;
 
+/**
+ * Conversion screen for a selected currency against GBP.
+ * Shows the current rate, a strength chip, and a two-way converter
+ * using a modern segmented toggle for direction selection.
+ */
 public class ConverterActivity extends AppCompatActivity {
 
     @Override
@@ -36,6 +41,7 @@ public class ConverterActivity extends AppCompatActivity {
         androidx.appcompat.widget.Toolbar tb = findViewById(R.id.toolbar);
         if (tb != null) tb.setNavigationOnClickListener(v -> finish());
 
+        // Header content
         title.setText(name + " (" + code + ")");
         rateTv.setText(String.format(Locale.UK, "1 GBP = %.4f %s", rate, code));
         btnGbpTo.setText("GBP \u2192 " + code);
@@ -52,12 +58,13 @@ public class ConverterActivity extends AppCompatActivity {
             chip.setContentDescription(getString(R.string.cd_rate_chip, label));
         }
 
+        // Convert on tap using the selected direction
         convert.setOnClickListener(v -> {
             String s = amount.getText().toString().trim();
-            if (s.isEmpty()) { amount.setError("Enter an amount"); return; }
+            if (s.isEmpty()) { amount.setError(getString(R.string.error_enter_amount)); return; }
             try {
                 double a = Double.parseDouble(s);
-                if (a < 0) { amount.setError("Must be = 0"); return; }
+                if (a < 0) { amount.setError(getString(R.string.error_non_negative)); return; }
                 double out;
                 if (dir.getCheckedButtonId() == R.id.btnGbpToCode) {
                     out = a * rate;
@@ -67,25 +74,28 @@ public class ConverterActivity extends AppCompatActivity {
                     result.setText(String.format(Locale.UK, "%.2f %s = %.2f GBP", a, code, out));
                 }
             } catch (NumberFormatException e) {
-                amount.setError("Invalid number");
+                amount.setError(getString(R.string.error_invalid_number));
             }
         });
     }
 
+    /**
+     * Color-coded chip for highlighting rate magnitude.
+     */
     private void styleChipForRate(Chip chip, double r) {
         if (chip == null) return;
         int bg;
         String label;
         if (Double.isNaN(r)) {
-            bg = 0xFF9E9E9E; label = "N/A";
+            bg = 0xFF9E9E9E; label = getString(R.string.rate_label_stable);
         } else if (r < 1.0) {
-            bg = getColor(R.color.rate_low); label = "Low";
+            bg = getColor(R.color.rate_low); label = getString(R.string.rate_label_low);
         } else if (r < 5.0) {
-            bg = getColor(R.color.rate_ok); label = "Stable";
+            bg = getColor(R.color.rate_ok); label = getString(R.string.rate_label_stable);
         } else if (r < 10.0) {
-            bg = getColor(R.color.rate_mid); label = "Elevated";
+            bg = getColor(R.color.rate_mid); label = getString(R.string.rate_label_elevated);
         } else {
-            bg = getColor(R.color.rate_high); label = "High";
+            bg = getColor(R.color.rate_high); label = getString(R.string.rate_label_high);
         }
         chip.setText(label);
         chip.setChipBackgroundColor(android.content.res.ColorStateList.valueOf(bg));

@@ -14,6 +14,10 @@ import java.util.Locale;
 
 import org.me.gcu.s1032688.model.CurrencyItem;
 
+/**
+ * Repository responsible for downloading the RSS feed and parsing it into
+ * strongly-typed model objects using the XmlPullParser API.
+ */
 public class CurrencyRepository {
 
     public static final String FEED_URL = "https://www.fx-exchange.com/gbp/rss.xml";
@@ -27,7 +31,7 @@ public class CurrencyRepository {
         }
     }
 
-    /** Network: download the RSS into a String. */
+    /** Network: download the RSS into a UTF-8 string. */
     public String fetchFeedString() throws Exception {
         HttpURLConnection conn = null;
         InputStream in = null;
@@ -72,14 +76,14 @@ public class CurrencyRepository {
         }
     }
 
-    /** Heuristic: true if looks like an RSS/XML document. */
+    /** Heuristic: true if the payload looks like an RSS/XML document. */
     private boolean isLikelyRss(String s) {
         String t = s.trim().toLowerCase();
         // allow optional XML prolog, then <rss ...> or <feed ...>
         return t.startsWith("<?xml") || t.contains("<rss") || t.contains("<feed");
     }
 
-    /** PullParser over the downloaded *String* (as required). */
+    /** Parse an RSS XML string using an XmlPullParser into model items. */
     public ParseResult parseRssString(String xml) throws Exception {
         xml = sanitizeXml(xml);
         ArrayList<CurrencyItem> items = new ArrayList<>();
@@ -128,6 +132,7 @@ public class CurrencyRepository {
         return t == null ? "" : t.trim();
     }
 
+    /** Map one <item> set of fields from the RSS into a CurrencyItem. */
     private CurrencyItem mapFieldsToCurrencyItem(String title, String description, String link, String pubDate) {
         try {
             // e.g. title: "British Pound Sterling(GBP)/United States Dollar(USD)"

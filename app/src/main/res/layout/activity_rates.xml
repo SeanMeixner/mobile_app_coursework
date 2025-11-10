@@ -12,13 +12,13 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:theme="@style/ThemeOverlay.Material3.Dark.ActionBar"
-        app:title="All Rates"
+        app:title="@string/title_all_rates"
         app:navigationIcon="@android:drawable/ic_menu_revert" />
 
     <SearchView
         android:id="@+id/searchView"
         android:iconifiedByDefault="false"
-        android:queryHint="Search: name, code, country word."
+        android:queryHint="@string/search_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"/>
@@ -36,7 +36,7 @@
             style="@style/Widget.Material3.Chip.Assist.Elevated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Low"
+            android:text="@string/rate_label_low"
             app:chipBackgroundColor="@color/rate_low"
             android:textColor="@android:color/white"/>
 
@@ -44,7 +44,7 @@
             style="@style/Widget.Material3.Chip.Assist.Elevated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Stable"
+            android:text="@string/rate_label_stable"
             app:chipBackgroundColor="@color/rate_ok"
             android:textColor="@android:color/white"/>
 
@@ -52,7 +52,7 @@
             style="@style/Widget.Material3.Chip.Assist.Elevated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Elevated"
+            android:text="@string/rate_label_elevated"
             app:chipBackgroundColor="@color/rate_mid"
             android:textColor="@android:color/black"/>
 
@@ -60,7 +60,7 @@
             style="@style/Widget.Material3.Chip.Assist.Elevated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="High"
+            android:text="@string/rate_label_high"
             app:chipBackgroundColor="@color/rate_high"
             android:textColor="@android:color/white"/>
     </com.google.android.material.chip.ChipGroup>

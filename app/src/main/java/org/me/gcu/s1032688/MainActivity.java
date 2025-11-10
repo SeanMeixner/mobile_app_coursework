@@ -1,16 +1,20 @@
-/*  Starter project for Mobile Platform Development - 1st diet 25/26
-    You should use this project as the starting point for your assignment.
-    This project simply reads the data from the required URL and displays the
-    raw data in a TextField
-*/
+/*
+ * Dashboard Activity
+ * ------------------
+ * Hosts the main dashboard showing:
+ *  - A hint to use the three main currency cards (USD/EUR/JPY)
+ *  - The three "major" rates as tappable cards that open the converter
+ *  - An attribution line for data sources
+ *  - A compact preview of the latest feed items
+ *
+ * The screen observes a ViewModel for live data and background refreshes.
+ */
 
-//
 // Name                 Sean Meixner
 // Student ID           S1032688
 // Programme of Study   Computing
 //
-
-// UPDATE THE PACKAGE NAME to include your Student Identifier
+// Package updated to include student identifier
 package org.me.gcu.s1032688;
 
 import android.content.Intent;
@@ -62,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
         vm = new ViewModelProvider(this).get(CurrencyViewModel.class);
 
-        // Observers
+        // Observe loading state and errors
         vm.loading.observe(this, loading -> {
             startButton.setEnabled(!Boolean.TRUE.equals(loading));
             if (Boolean.TRUE.equals(loading)) rawDataDisplay.setText("Fetching latest GBP rates…");
@@ -79,13 +83,13 @@ public class MainActivity extends AppCompatActivity {
             // Keep the hint text instead of last updated time
             lastUpdatedChip.setText(getString(R.string.majors_hint));
         });
-        // After vm.refreshNow() completes and items arrive, change button behaviour:
+        // After a refresh completes and items arrive, wire the UI
         vm.items.observe(this, list -> {
             renderPreview(list, vm.lastBuildDate.getValue());
 
             if (list != null && !list.isEmpty()) {
                 // Reuse button to open the list
-                startButton.setText("View All Rates");
+                startButton.setText(R.string.view_all_rates);
                 startButton.setOnClickListener(v ->
                     startActivity(new android.content.Intent(this, org.me.gcu.s1032688.ui.RatesActivity.class)));
 
@@ -106,34 +110,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Button triggers a manual refresh (auto-refresh added later)
+        // Manual refresh button (auto-refresh also runs in background)
         startButton.setOnClickListener(v -> vm.refreshNow());
 
         // Initial load
         if (vm.items.getValue() == null || vm.items.getValue().isEmpty()) {
             vm.refreshNow();
         }
-    }
-
-    private void updatePreview(ArrayList<CurrencyItem> list, String lastBuild) {
-        if (list == null) list = new ArrayList<>();
-        StringBuilder sb = new StringBuilder();
-        sb.append("Parsed items: ").append(list.size()).append("\n");
-        if (lastBuild != null) sb.append("Last updated: ").append(lastBuild).append("\n\n");
-
-        int show = Math.min(6, list.size());
-        for (int i = 0; i < show; i++) {
-            CurrencyItem ci = list.get(i);
-            sb.append(String.format(Locale.UK, "%s (%s): 1 GBP = %.4f %s\n",
-                    ci.displayName, ci.code, ci.rate, ci.code));
-        }
-        if (list.isEmpty()) {
-            sb.append("\nNo items parsed. Tap the button to try again.");
-        } else {
-            sb.append("\n• Data held in ViewModel (survives rotation)\n");
-            sb.append("• Ready for list/search/converter views\n");
-        }
-        rawDataDisplay.setText(sb.toString());
     }
 
     private CurrencyItem findByCode(ArrayList<CurrencyItem> list, String code) {
@@ -163,10 +146,6 @@ public class MainActivity extends AppCompatActivity {
         if (rateView != null) rateView.setOnClickListener(v -> openConverter(item));
         if (sub != null) sub.setOnClickListener(v -> openConverter(item));
     }
-
-    // removed unused bindMajorCard()
-
-    // chip styling removed for dashboard per request
 
     // New preview renderer without debug lines; shows last updated and first 12 rates
     private void renderPreview(ArrayList<CurrencyItem> list, String lastBuild) {

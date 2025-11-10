@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:theme="@style/ThemeOverlay.Material3.Dark.ActionBar"
-        app:title="Currency Dashboard" />
+        app:title="@string/title_dashboard" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -34,7 +34,7 @@
 
             <Button
                 android:id="@+id/startButton"
-                android:text="Refresh / View All Rates"
+                android:text="@string/view_all_rates"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>

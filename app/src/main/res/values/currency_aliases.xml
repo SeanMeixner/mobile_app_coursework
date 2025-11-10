@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Map currency code to pipe-separated alias keywords used in search filtering.
-         Format per item: CODE:alias1|alias2|alias3 -->
+    <!--
+        Currency aliases used for search filtering in the All Rates screen.
+        Each entry maps a 3-letter currency code to a list of country/region
+        words that users might search for (both country names and adjectives).
+
+        Format per item: CODE:alias1|alias2|alias3
+        Notes:
+        - Matching is case-insensitive and accent-insensitive.
+        - Keep the alias list small and relevant to avoid false positives.
+    -->
     <string-array name="currency_aliases">
         <!-- majors -->
         <item>USD:united states|usa|america|u.s.|us</item>
@@ -47,4 +55,3 @@
         <item>RUB:russia|russian</item>
     </string-array>
 </resources>
-

@@ -18,7 +18,7 @@
 
         <TextView
             android:id="@+id/salutation"
-            android:text="Currency Dashboard"
+            android:text="@string/title_dashboard"
             android:textStyle="bold"
             android:textSize="22sp"
             android:layout_width="match_parent"
@@ -28,7 +28,7 @@
         <!-- Refresh button (full width) -->
         <Button
             android:id="@+id/startButton"
-            android:text="View all rates"
+            android:text="@string/view_all_rates"
             android:textAllCaps="false"
             android:maxLines="1"
             android:ellipsize="end"
@@ -76,7 +76,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="8dp"
                     android:src="@drawable/flag_us"
-                    android:contentDescription="USD Flag" />
+                    android:contentDescription="@string/cd_flag" />
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -135,7 +135,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="8dp"
                     android:src="@drawable/flag_eu"
-                    android:contentDescription="EUR Flag" />
+                    android:contentDescription="@string/cd_flag" />
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -193,7 +193,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="8dp"
                     android:src="@drawable/flag_jp"
-                    android:contentDescription="JPY Flag" />
+                    android:contentDescription="@string/cd_flag" />
 
                 <LinearLayout
                     android:orientation="vertical"

@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- currency code to 2-letter country/region code used in flag_*.png -->
+    <!--
+        Map from 3-letter currency code (ISO) to a 2-letter country/region
+        code used in drawable resource names (flag_XX.png). This allows the
+        app to resolve a small representative flag for each currency via
+        FlagResolver.
+
+        Sources: Flag icons from Flagpedia (flagpedia.net). Some multi-country
+        currencies are mapped to a representative location for simplicity.
+    -->
     <string-array name="currency_flag_map">
         <!-- Major currencies -->
         <item>GBP:gb</item>
@@ -172,4 +180,3 @@
         <item>GIP:gi</item>
     </string-array>
 </resources>
-

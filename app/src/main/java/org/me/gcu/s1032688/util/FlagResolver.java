@@ -7,12 +7,17 @@ import org.me.gcu.s1032688.R;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Utility that maps a 3-letter currency code to a drawable flag resource
+ * using a simple CODE:cc mapping loaded from resources.
+ */
 public final class FlagResolver {
 
     private FlagResolver() {}
 
     private static Map<String, String> CUR_TO_CC = null;
 
+    /** Lazily load the currency->country code mapping from resources. */
     private static synchronized void ensureLoaded(Context ctx) {
         if (CUR_TO_CC != null) return;
         Map<String, String> m = new HashMap<>();
@@ -33,6 +38,7 @@ public final class FlagResolver {
         CUR_TO_CC = m;
     }
 
+    /** Resolve a drawable resource id for the given currency code (or 0 if none). */
     public static int drawableFor(Context ctx, String currencyCode) {
         if (currencyCode == null) return 0;
         ensureLoaded(ctx);
@@ -43,4 +49,3 @@ public final class FlagResolver {
         return id;
     }
 }
-

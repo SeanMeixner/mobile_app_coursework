@@ -20,12 +20,17 @@ import org.me.gcu.s1032688.model.CurrencyItem;
 
 import java.util.ArrayList;
 
+/**
+ * Displays the full list of exchange rates with search and color coding.
+ * Clicking a row opens the converter pre-filled for that currency.
+ */
 public class RatesActivity extends AppCompatActivity implements RatesAdapter.OnRateClick {
     private CurrencyViewModel vm;
     private RatesAdapter adapter;
 
     @Override
     protected void onCreate(Bundle b) {
+        // Sets up RecyclerView, search behavior and observers.
         super.onCreate(b);
         setContentView(R.layout.activity_rates);
 
@@ -72,6 +77,7 @@ public class RatesActivity extends AppCompatActivity implements RatesAdapter.OnR
 
     @Override
     public void onRateClicked(CurrencyItem item) {
+        // Launch converter for the selected currency
         Intent i = new Intent(this, ConverterActivity.class);
         i.putExtra("code", item.code);
         i.putExtra("name", item.displayName);

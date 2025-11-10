@@ -7,4 +7,19 @@
     <string name="acknowledgement_text">Rates from fx-exchange.com (RSS). Flag icons from Flagpedia (flagpedia.net).</string>
     <string name="preview_header">Preview of updates</string>
     <string name="majors_hint">Tap the 3 buttons below to convert</string>
+    <!-- Titles and labels -->
+    <string name="title_dashboard">Currency Dashboard</string>
+    <string name="title_all_rates">All Rates</string>
+    <string name="title_converter">Converter</string>
+    <string name="view_all_rates">View All Rates</string>
+    <string name="search_hint">Search: name, code, country word.</string>
+    <!-- Converter errors -->
+    <string name="error_enter_amount">Enter an amount</string>
+    <string name="error_non_negative">Must be ≥ 0</string>
+    <string name="error_invalid_number">Invalid number</string>
+    <!-- Rate magnitude labels (for chips) -->
+    <string name="rate_label_low">Low</string>
+    <string name="rate_label_stable">Stable</string>
+    <string name="rate_label_elevated">Elevated</string>
+    <string name="rate_label_high">High</string>
 </resources>
