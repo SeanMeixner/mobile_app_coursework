@@ -8,7 +8,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,6 +31,8 @@ public class RatesActivity extends AppCompatActivity implements RatesAdapter.OnR
 
         RecyclerView rv = findViewById(R.id.recycler);
         SearchView sv = findViewById(R.id.searchView);
+        androidx.appcompat.widget.Toolbar tb = findViewById(R.id.toolbar);
+        if (tb != null) tb.setNavigationOnClickListener(v -> finish());
 
         // Add bottom padding equal to keyboard height when it's visible
         ViewCompat.setOnApplyWindowInsetsListener(rv, (v, insets) -> {
@@ -53,7 +54,6 @@ public class RatesActivity extends AppCompatActivity implements RatesAdapter.OnR
         });
 
         rv.setLayoutManager(new LinearLayoutManager(this));
-        rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         adapter = new RatesAdapter(new ArrayList<>(), this, this);
         rv.setAdapter(adapter);
 

@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 setMajor(majorUsd, majorUsdSub, usd);
                 setMajor(majorEur, majorEurSub, eur);
                 setMajor(majorJpy, majorJpySub, jpy);
+
             }
         });
 
@@ -151,19 +152,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void bindMajorCard(View card, CurrencyItem item) {
-        if (card == null) return;
-        if (item == null) {
-            card.setClickable(false);
-            return;
-        }
-        card.setClickable(true);
-        card.setOnClickListener(v -> {
-            Intent i = new Intent(this, org.me.gcu.s1032688.ui.ConverterActivity.class);
-            i.putExtra("code", item.code);
-            i.putExtra("rate", item.rate);
-            i.putExtra("displayName", item.displayName);
-            startActivity(i);
-        });
-    }
+    // removed unused bindMajorCard()
+
+    // chip styling removed for dashboard per request
 }

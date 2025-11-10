@@ -1,6 +1,7 @@
 package org.me.gcu.s1032688.ui;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -121,8 +122,8 @@ public class RatesAdapter extends RecyclerView.Adapter<RatesAdapter.Holder> {
         h.title.setText(c.displayName + " (" + c.code + ")");
         h.sub.setText(String.format(Locale.UK, "1 GBP = %.4f %s", c.rate, c.code));
 
-        int bg = colorForRate(c.rate);
-        h.itemView.setBackgroundColor(bg);
+        // Emphasize rate with a colored chip instead of row background
+        styleChipForRate(h, c.rate);
 
         int flagRes = FlagResolver.drawableFor(h.itemView.getContext(), c.code);
         if (flagRes != 0) {
@@ -139,21 +140,37 @@ public class RatesAdapter extends RecyclerView.Adapter<RatesAdapter.Holder> {
     @Override public int getItemCount() { return shown.size(); }
 
     static class Holder extends RecyclerView.ViewHolder {
-        ImageView flag; TextView title, sub;
+        ImageView flag; TextView title, sub; com.google.android.material.chip.Chip rateChip;
         Holder(@NonNull View v) {
             super(v);
             flag  = v.findViewById(R.id.flag);
             title = v.findViewById(R.id.title);
             sub   = v.findViewById(R.id.sub);
+            rateChip = v.findViewById(R.id.rateChip);
         }
     }
 
-    private int colorForRate(double r) {
-        if (Double.isNaN(r)) return 0x00000000;
-        if (r < 1.0)  return 0x332196F3;
-        if (r < 5.0)  return 0x33A5D6A7;
-        if (r < 10.0) return 0x33FFD54F;
-        return 0x33EF9A9A;
+    private void styleChipForRate(Holder h, double r) {
+        if (h.rateChip == null) return;
+        int bg;
+        String label;
+        if (Double.isNaN(r)) {
+            bg = 0xFF9E9E9E; label = "N/A";
+        } else if (r < 1.0) {
+            bg = h.itemView.getContext().getColor(R.color.rate_low); label = "Low";
+        } else if (r < 5.0) {
+            bg = h.itemView.getContext().getColor(R.color.rate_ok); label = "Stable";
+        } else if (r < 10.0) {
+            bg = h.itemView.getContext().getColor(R.color.rate_mid); label = "Elevated";
+        } else {
+            bg = h.itemView.getContext().getColor(R.color.rate_high); label = "High";
+        }
+        h.rateChip.setText(label);
+        h.rateChip.setChipBackgroundColor(ColorStateList.valueOf(bg));
+        // Set readable text color depending on background luminance (simple heuristic)
+        int rC = (bg >> 16) & 0xFF, gC = (bg >> 8) & 0xFF, bC = bg & 0xFF;
+        double luminance = (0.299*rC + 0.587*gC + 0.114*bC) / 255.0;
+        int textColor = luminance > 0.6 ? 0xFF000000 : 0xFFFFFFFF;
+        h.rateChip.setTextColor(textColor);
     }
 }
-

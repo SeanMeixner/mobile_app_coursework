@@ -1,18 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent"
-    android:padding="12dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FAFAFA">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.Material3.Dark.ActionBar"
+        app:title="All Rates"
+        app:navigationIcon="@android:drawable/ic_menu_revert" />
 
     <SearchView
         android:id="@+id/searchView"
         android:iconifiedByDefault="false"
-        android:queryHint="Search: name, code, country word…"
+        android:queryHint="Search: name, code, country word."
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"/>
+
+    <!-- Legend for rate magnitude colors -->
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/legendGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        app:singleLine="true">
+
+        <com.google.android.material.chip.Chip
+            style="@style/Widget.Material3.Chip.Assist.Elevated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Low"
+            app:chipBackgroundColor="@color/rate_low"
+            android:textColor="@android:color/white"/>
+
+        <com.google.android.material.chip.Chip
+            style="@style/Widget.Material3.Chip.Assist.Elevated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Stable"
+            app:chipBackgroundColor="@color/rate_ok"
+            android:textColor="@android:color/white"/>
+
+        <com.google.android.material.chip.Chip
+            style="@style/Widget.Material3.Chip.Assist.Elevated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Elevated"
+            app:chipBackgroundColor="@color/rate_mid"
+            android:textColor="@android:color/black"/>
+
+        <com.google.android.material.chip.Chip
+            style="@style/Widget.Material3.Chip.Assist.Elevated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="High"
+            app:chipBackgroundColor="@color/rate_high"
+            android:textColor="@android:color/white"/>
+    </com.google.android.material.chip.ChipGroup>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="12dp"
+        android:clipToPadding="false"/>
 </LinearLayout>

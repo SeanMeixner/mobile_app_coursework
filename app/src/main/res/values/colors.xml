@@ -2,4 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <!-- Rate magnitude accents -->
+    <color name="rate_low">#2196F3</color>     <!-- blue -->
+    <color name="rate_ok">#4CAF50</color>      <!-- green -->
+    <color name="rate_mid">#FFC107</color>     <!-- amber -->
+    <color name="rate_high">#EF5350</color>    <!-- red -->
 </resources>

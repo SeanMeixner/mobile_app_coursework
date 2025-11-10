@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">S1032688</string>
+    <string name="hint_amount">Amount</string>
+    <string name="action_convert">Convert</string>
+    <string name="cd_rate_chip">Rate category: %1$s</string>
+    <string name="cd_flag">Currency flag</string>
 </resources>
