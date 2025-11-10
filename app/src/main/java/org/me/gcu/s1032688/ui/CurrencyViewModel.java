@@ -39,7 +39,7 @@ public class CurrencyViewModel extends ViewModel {
         scheduler.schedule(this::refreshNow, 500, TimeUnit.MILLISECONDS);
         // demo-friendly interval (15 min). For submission, change both 15 → 60.
         refreshTask = scheduler.scheduleWithFixedDelay(
-                this::refreshNow, 15, 15, TimeUnit.MINUTES
+                this::refreshNow, 60, 60, TimeUnit.MINUTES
         );
     }
 

@@ -92,6 +92,11 @@ public class MainActivity extends AppCompatActivity {
                 setMajor(majorEur, majorEurSub, eur);
                 setMajor(majorJpy, majorJpySub, jpy);
 
+                // Make whole cards tappable to access conversion
+                if (cardUsd != null) cardUsd.setOnClickListener(v -> openConverter(usd));
+                if (cardEur != null) cardEur.setOnClickListener(v -> openConverter(eur));
+                if (cardJpy != null) cardJpy.setOnClickListener(v -> openConverter(jpy));
+
             }
         });
 
@@ -143,16 +148,19 @@ public class MainActivity extends AppCompatActivity {
         sub.setText("Tap to convert");
 
         // Attach tap handler to open converter
-        label.setOnClickListener(v -> {
-            Intent intent = new Intent(this, org.me.gcu.s1032688.ui.ConverterActivity.class);
-            intent.putExtra("code", item.code);
-            intent.putExtra("rate", item.rate);
-            intent.putExtra("displayName", item.displayName);
-            startActivity(intent);
-        });
+        label.setOnClickListener(v -> openConverter(item));
     }
 
     // removed unused bindMajorCard()
 
     // chip styling removed for dashboard per request
+
+    private void openConverter(CurrencyItem item) {
+        if (item == null) return;
+        Intent intent = new Intent(this, org.me.gcu.s1032688.ui.ConverterActivity.class);
+        intent.putExtra("code", item.code);
+        intent.putExtra("rate", item.rate);
+        intent.putExtra("name", item.displayName);
+        startActivity(intent);
+    }
 }
