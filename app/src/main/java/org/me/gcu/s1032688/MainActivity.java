@@ -32,7 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView rawDataDisplay;
     private Button startButton;
-    private TextView majorUsd, majorUsdSub, majorEur, majorEurSub, majorJpy, majorJpySub;
+    private TextView majorUsd, majorUsdRate, majorUsdSub,
+            majorEur, majorEurRate, majorEurSub,
+            majorJpy, majorJpyRate, majorJpySub;
     private View cardUsd, cardEur, cardJpy;
     private TextView lastUpdatedChip;
     private CurrencyViewModel vm;
@@ -46,10 +48,13 @@ public class MainActivity extends AppCompatActivity {
         startButton = findViewById(R.id.startButton);
         majorUsd = findViewById(R.id.majorUsd);
         majorUsdSub = findViewById(R.id.majorUsdSub);
+        majorUsdRate = findViewById(R.id.majorUsdRate);
         majorEur = findViewById(R.id.majorEur);
         majorEurSub = findViewById(R.id.majorEurSub);
+        majorEurRate = findViewById(R.id.majorEurRate);
         majorJpy = findViewById(R.id.majorJpy);
         majorJpySub = findViewById(R.id.majorJpySub);
+        majorJpyRate = findViewById(R.id.majorJpyRate);
         cardUsd = findViewById(R.id.cardUsd);
         cardEur = findViewById(R.id.cardEur);
         cardJpy = findViewById(R.id.cardJpy);
@@ -70,12 +75,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
         vm.lastBuildDate.observe(this, s -> {
-            updatePreview(vm.items.getValue(), s);
-            if (s != null) lastUpdatedChip.setText("Last updated: " + s);
+            renderPreview(vm.items.getValue(), s);
+            // Keep the hint text instead of last updated time
+            lastUpdatedChip.setText(getString(R.string.majors_hint));
         });
         // After vm.refreshNow() completes and items arrive, change button behaviour:
         vm.items.observe(this, list -> {
-            updatePreview(list, vm.lastBuildDate.getValue());
+            renderPreview(list, vm.lastBuildDate.getValue());
 
             if (list != null && !list.isEmpty()) {
                 // Reuse button to open the list
@@ -88,9 +94,9 @@ public class MainActivity extends AppCompatActivity {
                 CurrencyItem eur = findByCode(list, "EUR");
                 CurrencyItem jpy = findByCode(list, "JPY");
 
-                setMajor(majorUsd, majorUsdSub, usd);
-                setMajor(majorEur, majorEurSub, eur);
-                setMajor(majorJpy, majorJpySub, jpy);
+                setMajor(majorUsd, majorUsdRate, majorUsdSub, usd);
+                setMajor(majorEur, majorEurRate, majorEurSub, eur);
+                setMajor(majorJpy, majorJpyRate, majorJpySub, jpy);
 
                 // Make whole cards tappable to access conversion
                 if (cardUsd != null) cardUsd.setOnClickListener(v -> openConverter(usd));
@@ -138,22 +144,49 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
-    private void setMajor(TextView label, TextView sub, CurrencyItem item) {
+    private void setMajor(TextView label, TextView rateView, TextView sub, CurrencyItem item) {
         if (item == null) {
-            label.setText("-- : --");
+            label.setText("--");
+            if (rateView != null) rateView.setText("--");
             sub.setText("Not available");
             return;
         }
-        label.setText(String.format(Locale.UK, "%s: %.4f", item.code, item.rate));
-        sub.setText("Tap to convert");
+        label.setText(item.code);
+        if (rateView != null) rateView.setText(String.format(Locale.UK, "%.3f", item.rate));
+        if (sub != null) {
+            sub.setText("");
+            sub.setVisibility(View.GONE);
+        }
 
         // Attach tap handler to open converter
         label.setOnClickListener(v -> openConverter(item));
+        if (rateView != null) rateView.setOnClickListener(v -> openConverter(item));
+        if (sub != null) sub.setOnClickListener(v -> openConverter(item));
     }
 
     // removed unused bindMajorCard()
 
     // chip styling removed for dashboard per request
+
+    // New preview renderer without debug lines; shows last updated and first 12 rates
+    private void renderPreview(ArrayList<CurrencyItem> list, String lastBuild) {
+        StringBuilder sb = new StringBuilder();
+        if (lastBuild != null && !lastBuild.isEmpty()) {
+            sb.append("Last updated: ").append(lastBuild).append("\n\n");
+        }
+
+        if (list != null && !list.isEmpty()) {
+            int show = Math.min(12, list.size());
+            for (int i = 0; i < show; i++) {
+                CurrencyItem ci = list.get(i);
+                sb.append(String.format(Locale.UK, "\u2022 %s (%s): 1 GBP = %.4f %s\n",
+                        ci.displayName, ci.code, ci.rate, ci.code));
+            }
+        } else {
+            sb.append("No rates available. Tap Refresh to try again.");
+        }
+        rawDataDisplay.setText(sb.toString());
+    }
 
     private void openConverter(CurrencyItem item) {
         if (item == null) return;

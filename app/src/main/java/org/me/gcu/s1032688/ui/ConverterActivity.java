@@ -25,9 +25,9 @@ public class ConverterActivity extends AppCompatActivity {
 
         TextView title = findViewById(R.id.title);
         TextView rateTv = findViewById(R.id.rate);
-        RadioGroup dir = findViewById(R.id.dirGroup);
-        RadioButton gbpTo = findViewById(R.id.gbpToCode);
-        RadioButton codeTo = findViewById(R.id.codeToGbp);
+        com.google.android.material.button.MaterialButtonToggleGroup dir = findViewById(R.id.dirToggle);
+        com.google.android.material.button.MaterialButton btnGbpTo = findViewById(R.id.btnGbpToCode);
+        com.google.android.material.button.MaterialButton btnCodeTo = findViewById(R.id.btnCodeToGbp);
         EditText amount = findViewById(R.id.amount);
         Button convert = findViewById(R.id.convert);
         TextView result = findViewById(R.id.result);
@@ -38,9 +38,9 @@ public class ConverterActivity extends AppCompatActivity {
 
         title.setText(name + " (" + code + ")");
         rateTv.setText(String.format(Locale.UK, "1 GBP = %.4f %s", rate, code));
-        gbpTo.setText("GBP \u2192 " + code);
-        codeTo.setText(code + " \u2192 GBP");
-        gbpTo.setChecked(true);
+        btnGbpTo.setText("GBP \u2192 " + code);
+        btnCodeTo.setText(code + " \u2192 GBP");
+        dir.check(R.id.btnGbpToCode);
 
         if (flag != null) {
             int res = FlagResolver.drawableFor(this, code);
@@ -59,7 +59,7 @@ public class ConverterActivity extends AppCompatActivity {
                 double a = Double.parseDouble(s);
                 if (a < 0) { amount.setError("Must be = 0"); return; }
                 double out;
-                if (gbpTo.isChecked()) {
+                if (dir.getCheckedButtonId() == R.id.btnGbpToCode) {
                     out = a * rate;
                     result.setText(String.format(Locale.UK, "%.2f GBP = %.2f %s", a, out, code));
                 } else {

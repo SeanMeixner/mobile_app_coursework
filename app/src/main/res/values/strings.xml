@@ -5,4 +5,6 @@
     <string name="cd_rate_chip">Rate category: %1$s</string>
     <string name="cd_flag">Currency flag</string>
     <string name="acknowledgement_text">Rates from fx-exchange.com (RSS). Flag icons from Flagpedia (flagpedia.net).</string>
+    <string name="preview_header">Preview of updates</string>
+    <string name="majors_hint">Tap the 3 buttons below to convert</string>
 </resources>

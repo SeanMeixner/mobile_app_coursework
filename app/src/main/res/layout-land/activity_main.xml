@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Landscape layout: Dashboard on left, preview pane on right -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:padding="16dp"
     android:background="#FAFAFA"
@@ -39,7 +40,7 @@
         <!-- Last updated chip under the button -->
         <TextView
             android:id="@+id/lastUpdatedChip"
-            android:text="Last updated: --"
+            android:text="@string/majors_hint"
             android:padding="6dp"
             android:textSize="12sp"
             android:background="@drawable/bg_card"
@@ -70,8 +71,8 @@
 
                 <ImageView
                     android:id="@+id/flagUsd"
-                    android:layout_width="32dp"
-                    android:layout_height="20dp"
+                    android:layout_width="24dp"
+                    android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="8dp"
                     android:src="@drawable/flag_us"
@@ -84,16 +85,31 @@
 
                     <TextView
                         android:id="@+id/majorUsd"
-                        android:text="USD: --"
+                        android:text="USD"
                         android:textStyle="bold"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/majorUsdRate"
+                        android:text="--"
+                        android:textSize="14sp"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        app:autoSizeTextType="uniform"
+                        app:autoSizeMinTextSize="10sp"
+                        app:autoSizeMaxTextSize="14sp"
+                        app:autoSizeStepGranularity="1sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                     <TextView
                         android:id="@+id/majorUsdSub"
-                        android:text="Tap to convert"
-                        android:textSize="12sp"
+                        android:text=""
+                        android:textSize="11sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -114,8 +130,8 @@
 
                 <ImageView
                     android:id="@+id/flagEur"
-                    android:layout_width="32dp"
-                    android:layout_height="20dp"
+                    android:layout_width="24dp"
+                    android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="8dp"
                     android:src="@drawable/flag_eu"
@@ -128,16 +144,31 @@
 
                     <TextView
                         android:id="@+id/majorEur"
-                        android:text="EUR: --"
+                        android:text="EUR"
                         android:textStyle="bold"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/majorEurRate"
+                        android:text="--"
+                        android:textSize="14sp"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        app:autoSizeTextType="uniform"
+                        app:autoSizeMinTextSize="10sp"
+                        app:autoSizeMaxTextSize="14sp"
+                        app:autoSizeStepGranularity="1sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                     <TextView
                         android:id="@+id/majorEurSub"
-                        android:text="Tap to convert"
-                        android:textSize="12sp"
+                        android:text=""
+                        android:textSize="11sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -157,8 +188,8 @@
 
                 <ImageView
                     android:id="@+id/flagJpy"
-                    android:layout_width="32dp"
-                    android:layout_height="20dp"
+                    android:layout_width="24dp"
+                    android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="8dp"
                     android:src="@drawable/flag_jp"
@@ -171,16 +202,31 @@
 
                     <TextView
                         android:id="@+id/majorJpy"
-                        android:text="JPY: --"
+                        android:text="JPY"
                         android:textStyle="bold"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/majorJpyRate"
+                        android:text="--"
+                        android:textSize="14sp"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        app:autoSizeTextType="uniform"
+                        app:autoSizeMinTextSize="10sp"
+                        app:autoSizeMaxTextSize="14sp"
+                        app:autoSizeStepGranularity="1sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                     <TextView
                         android:id="@+id/majorJpySub"
-                        android:text="Tap to convert"
-                        android:textSize="12sp"
+                        android:text=""
+                        android:textSize="11sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -208,7 +254,7 @@
         android:padding="12dp">
 
         <TextView
-            android:text="Preview"
+            android:text="@string/preview_header"
             android:textStyle="bold"
             android:textSize="16sp"
             android:layout_width="wrap_content"
@@ -216,11 +262,13 @@
 
         <TextView
             android:id="@+id/rawDataDisplay"
-            android:fontFamily="monospace"
-            android:textSize="13sp"
+            android:fontFamily="sans-serif"
+            android:textSize="14sp"
+            android:lineSpacingExtra="4dp"
+            android:textColor="#333333"
             android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Raw Data will appear here" />
+            android:text="" />
     </LinearLayout>
 </LinearLayout>

@@ -70,43 +70,64 @@
     </com.google.android.material.card.MaterialCardView>
 
     <LinearLayout
-        android:orientation="vertical"
-        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="266dp"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <RadioGroup
-            android:id="@+id/dirGroup"
-            android:orientation="horizontal"
-            android:layout_width="match_parent" android:layout_height="wrap_content">
-            <RadioButton android:id="@+id/gbpToCode" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-            <RadioButton android:id="@+id/codeToGbp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-        </RadioGroup>
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/dirToggle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:selectionRequired="true"
+            app:singleSelection="true">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnGbpToCode"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="GBP → CODE" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCodeToGbp"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="CODE → GBP" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
 
         <EditText
             android:id="@+id/amount"
-            android:inputType="numberDecimal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:hint="@string/hint_amount"
+            android:importantForAutofill="no"
+            android:inputType="numberDecimal"
             android:minHeight="48dp"
             android:paddingTop="12dp"
             android:paddingBottom="12dp"
-            android:textColor="@android:color/black"
-            android:importantForAutofill="no"
-            android:layout_width="match_parent" android:layout_height="wrap_content"/>
+            android:textColor="@android:color/black" />
 
         <Button
             android:id="@+id/convert"
-            android:text="@string/action_convert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_width="match_parent" android:layout_height="wrap_content"/>
+            android:text="@string/action_convert" />
 
         <TextView
             android:id="@+id/result"
-            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            android:textSize="16sp" />
     </LinearLayout>
 
 </LinearLayout>
