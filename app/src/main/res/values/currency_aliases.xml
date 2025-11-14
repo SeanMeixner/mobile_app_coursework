@@ -2,22 +2,17 @@
 <resources>
     <!--
         Currency aliases used for search filtering in the All Rates screen.
-        Each entry maps a 3-letter currency code to a list of country/region
-        words that users might search for (both country names and adjectives).
-
-        Format per item: CODE:alias1|alias2|alias3
-        Notes:
-        - Matching is case-insensitive and accent-insensitive.
-        - Keep the alias list small and relevant to avoid false positives.
+        Key for input is "Currency: Country name| other aliases| etc"
+        for example      "CNY:china|prc|chinese"
     -->
     <string-array name="currency_aliases">
-        <!-- majors -->
+        <!-- major countries stated on coursework -->
         <item>USD:united states|usa|america|u.s.|us</item>
         <item>GBP:united kingdom|uk|britain|great britain|england|scotland|wales|northern ireland</item>
         <item>EUR:european union|eu|eurozone|europe</item>
         <item>JPY:japan|nippon</item>
 
-        <!-- common -->
+        <!-- All other countries I tried to name them all :-P -->
         <item>CHF:switzerland|swiss</item>
         <item>AUD:australia|aussie</item>
         <item>CAD:canada|canadian</item>
@@ -53,5 +48,13 @@
         <item>MAD:morocco|moroccan</item>
         <item>ANG:curacao|netherlands antilles|antilles</item>
         <item>RUB:russia|russian</item>
+        <item>KWD:kuwait|kuwaiti</item>
+        <item>QAR:qatar|qatari</item>
+        <item>BHD:bahrain|bahraini</item>
+        <item>OMR:oman|omanian</item>
+        <item>JOD:jordan|jordanian</item>
+        <item>LBP:lebanon|lebanese</item>
+        <item>LVL:Latvia|latvian</item>
+        <item>BGN:bulgaria|bulgarian</item>
     </string-array>
 </resources>
