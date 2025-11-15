@@ -179,5 +179,6 @@
         <item>FKP:fk</item>
         <item>GIP:gi</item>
         <item>LVL:lv</item>
+        <item>BTC:zz</item>
     </string-array>
 </resources>

@@ -267,7 +267,7 @@
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
 
-        <!-- Acknowledgement -->
+        <!-- Acknowledgement text -->
         <TextView
             android:id="@+id/acknowledgement"
             android:text="@string/acknowledgement_text"
@@ -276,7 +276,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <!-- Preview box -->
+        <!-- Preview of updates box -->
         <LinearLayout
             android:orientation="vertical"
             android:background="@drawable/bg_card"

@@ -56,5 +56,6 @@
         <item>LBP:lebanon|lebanese</item>
         <item>LVL:Latvia|latvian</item>
         <item>BGN:bulgaria|bulgarian</item>
+        <item>BTC:bitcoin</item>
     </string-array>
 </resources>
