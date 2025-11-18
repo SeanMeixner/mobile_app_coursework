@@ -41,6 +41,13 @@ public class ConverterActivity extends AppCompatActivity {
         androidx.appcompat.widget.Toolbar tb = findViewById(R.id.toolbar);
         if (tb != null) tb.setNavigationOnClickListener(v -> finish());
 
+        // Validate that we have a usable currency payload before wiring the UI
+        if (code == null || name == null || Double.isNaN(rate) || rate <= 0.0) {
+            Toast.makeText(this, getString(R.string.error_missing_rate), Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
+
         // Header content
         title.setText(name + " (" + code + ")");
         rateTv.setText(String.format(Locale.UK, "1 GBP = %.4f %s", rate, code));

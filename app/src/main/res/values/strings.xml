@@ -17,6 +17,7 @@
     <string name="error_enter_amount">Enter an amount</string>
     <string name="error_non_negative">Must be ≥ 0</string>
     <string name="error_invalid_number">Invalid number</string>
+    <string name="error_missing_rate">Unable to open converter for this currency. Please try again.</string>
     <!-- Rate magnitude labels (for chips) -->
     <string name="rate_label_low">Low</string>
     <string name="rate_label_stable">Stable</string>

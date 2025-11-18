@@ -4,6 +4,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.io.IOException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -57,11 +60,41 @@ public class CurrencyViewModel extends ViewModel {
                 _items.postValue(result.items);
                 _lastBuildDate.postValue(result.lastBuildDate);
             } catch (Exception e) {
-                _error.postValue(e.getMessage());
+                _error.postValue(buildUserFriendlyError(e));
             } finally {
                 _loading.postValue(false);
             }
         });
+    }
+
+    private String buildUserFriendlyError(Exception e) {
+        if (e == null) {
+            return "Unexpected error. Please try again.";
+        }
+
+        Throwable cause = e;
+        while (cause.getCause() != null) {
+            cause = cause.getCause();
+        }
+
+        if (cause instanceof UnknownHostException) {
+            return "No internet connection. Check your network and try again.";
+        } else if (cause instanceof SocketTimeoutException) {
+            return "The server took too long to respond. Please try again later.";
+        } else if (cause instanceof IOException) {
+            return "Network error while loading rates. Please check your connection.";
+        } else if (cause instanceof IllegalStateException) {
+            String msg = cause.getMessage();
+            if (msg != null && msg.startsWith("HTTP ")) {
+                return "The data server responded with an error (" + msg + "). Please try again later.";
+            } else if (msg != null && msg.toLowerCase().contains("non-rss")) {
+                return "The rates feed is temporarily unavailable. Please try again later.";
+            } else {
+                return "There was a problem reading the latest rates. Please try again.";
+            }
+        } else {
+            return "Unexpected error while loading rates. Please try again.";
+        }
     }
 
     @Override
