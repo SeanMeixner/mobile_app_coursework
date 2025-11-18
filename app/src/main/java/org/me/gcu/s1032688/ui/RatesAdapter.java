@@ -127,7 +127,7 @@ public class RatesAdapter extends RecyclerView.Adapter<RatesAdapter.Holder> {
         CurrencyItem c = shown.get(position);
 
         h.title.setText(c.displayName + " (" + c.code + ")");
-        h.sub.setText(String.format(Locale.UK, "1 GBP = %.4f %s", c.rate, c.code));
+        h.sub.setText(String.format(Locale.UK, "1 GBP = %.2f %s", c.rate, c.code));
 
         // Emphasize rate with a colored chip instead of row background
         styleChipForRate(h, c.rate);

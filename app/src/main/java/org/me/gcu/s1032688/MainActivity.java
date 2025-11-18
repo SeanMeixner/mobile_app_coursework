@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         label.setText(item.code);
-        if (rateView != null) rateView.setText(String.format(Locale.UK, "%.3f", item.rate));
+        if (rateView != null) rateView.setText(String.format(Locale.UK, "%.2f", item.rate));
         if (sub != null) {
             sub.setText("");
             sub.setVisibility(View.GONE);
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
             int show = Math.min(12, list.size());
             for (int i = 0; i < show; i++) {
                 CurrencyItem ci = list.get(i);
-                sb.append(String.format(Locale.UK, "\u2022 %s (%s): 1 GBP = %.4f %s\n",
+                sb.append(String.format(Locale.UK, "\u2022 %s (%s): 1 GBP = %.2f %s\n",
                         ci.displayName, ci.code, ci.rate, ci.code));
             }
         } else {

@@ -50,7 +50,7 @@ public class ConverterActivity extends AppCompatActivity {
 
         // Header content
         title.setText(name + " (" + code + ")");
-        rateTv.setText(String.format(Locale.UK, "1 GBP = %.4f %s", rate, code));
+        rateTv.setText(String.format(Locale.UK, "1 GBP = %.2f %s", rate, code));
         btnGbpTo.setText("GBP \u2192 " + code);
         btnCodeTo.setText(code + " \u2192 GBP");
         dir.check(R.id.btnGbpToCode);
