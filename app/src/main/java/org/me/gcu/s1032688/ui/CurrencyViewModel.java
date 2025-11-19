@@ -47,7 +47,7 @@ public class CurrencyViewModel extends ViewModel {
         // Initial fetch shortly after launch
         scheduler.schedule(this::refreshNow, 500, TimeUnit.MILLISECONDS);
         // Auto-update every hour (submission requirement).
-        refreshTask = scheduler.scheduleWithFixedDelay(this::refreshNow, 60, 60, java.util.concurrent.TimeUnit.MINUTES);
+        refreshTask = scheduler.scheduleWithFixedDelay(this::refreshNow, 30, 30, TimeUnit.SECONDS);
     }
     /** Trigger an immediate refresh of the RSS feed. */
     public void refreshNow() {

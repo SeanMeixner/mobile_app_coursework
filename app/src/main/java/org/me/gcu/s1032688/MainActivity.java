@@ -80,8 +80,13 @@ public class MainActivity extends AppCompatActivity {
 
         vm.lastBuildDate.observe(this, s -> {
             renderPreview(vm.items.getValue(), s);
-            // Keep the hint text instead of last updated time
-            lastUpdatedChip.setText(getString(R.string.majors_hint));
+
+            // Show a message on the main page each time data is refreshed
+            if (s != null && !s.isEmpty()) {
+                String timestamp = new java.text.SimpleDateFormat("HH:mm:ss", java.util.Locale.UK)
+                        .format(new java.util.Date());
+                lastUpdatedChip.setText("Page refreshed at " + timestamp);
+            }
         });
         // After a refresh completes and items arrive, wire the UI
         vm.items.observe(this, list -> {
