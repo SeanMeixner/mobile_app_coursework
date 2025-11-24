@@ -10,8 +10,8 @@ public class CurrencyItem {
     public String displayName;
     /** Numeric rate: 1 GBP = rate CODE. */
     public double rate;
-    /** Optional link back to the source item. */
+    /** link back to the source item. */
     @Nullable public String link;
-    /** Optional publication date of the item. */
+    /**  publication date of the item. */
     @Nullable public String pubDate;
 }

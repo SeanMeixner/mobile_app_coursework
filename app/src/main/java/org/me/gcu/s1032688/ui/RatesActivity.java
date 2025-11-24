@@ -51,7 +51,7 @@ public class RatesActivity extends AppCompatActivity implements RatesAdapter.OnR
         // Helpful: list can scroll "under" the padding smoothly
         rv.setClipToPadding(false);
 
-        // Optional: hide keyboard when user scrolls the list
+        // Optional: hide keyboard when user scrolls the list TBF this is not needed due to android setup.
         rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override public void onScrollStateChanged(@NonNull RecyclerView r, int newState) {
                 if (newState == RecyclerView.SCROLL_STATE_DRAGGING) sv.clearFocus();

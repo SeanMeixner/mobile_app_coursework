@@ -15,8 +15,7 @@ import java.util.Locale;
 import org.me.gcu.s1032688.model.CurrencyItem;
 
 /**
- * Repository responsible for downloading the RSS feed and parsing it into
- * strongly-typed model objects using the XmlPullParser API.
+ * Repository responsible for downloading the RSS feed and parsing it into a model.
  */
 public class CurrencyRepository {
 
@@ -31,7 +30,7 @@ public class CurrencyRepository {
         }
     }
 
-    /** Network: download the RSS into a UTF-8 string. */
+    /** Network esuring and parsing download the RSS into a UTF-8 string. */
     public String fetchFeedString() throws Exception {
         HttpURLConnection conn = null;
         InputStream in = null;
@@ -76,7 +75,7 @@ public class CurrencyRepository {
         }
     }
 
-    /** Heuristic: true if the payload looks like an RSS/XML document. */
+    /** Quick sanity check: ensure that i actually got RSS/XML, not an HTML/JS challenge page. */
     private boolean isLikelyRss(String s) {
         String t = s.trim().toLowerCase();
         // allow optional XML prolog, then <rss ...> or <feed ...>
